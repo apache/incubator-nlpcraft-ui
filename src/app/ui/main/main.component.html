@@ -1,0 +1,23 @@
+<app-load-spinner *ngIf="loading"></app-load-spinner>
+
+<div class="m-3">
+    <app-error [error]="error"></app-error>
+</div>
+
+<ng-container *ngIf="hasProbes">
+    <div class="main-content flex-column d-flex justify-content-start align-items-start">
+        <div *ngIf="!loading" class="d-flex flex-column align-self-stretch flex-fill">
+            <app-error [error]="error"></app-error>
+
+            <div *ngIf="hasProbes" class="row m-0 d-flex justify-content-around align-self-stretch flex-fill">
+                <div class="col-8">
+                    <app-details [query]="chatComponent.selectedQuery"></app-details>
+                </div>
+
+                <div class="col-4 p-0">
+                    <app-chat #chatComponent [allProbes]="allProbes"></app-chat>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

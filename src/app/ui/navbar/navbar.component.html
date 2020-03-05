@@ -1,0 +1,15 @@
+<nav class="navbar navbar-dark bg-dark px-4 sticky-top">
+    <span class="navbar-brand">
+        <img alt="NLPCraft" class="logo" src="assets/logo.gif">
+    </span>
+    <div>
+        <ul *ngIf="loggedIn" class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a (click)="logout()" class="nav-link" href="javascript:">
+                    <fa-icon icon="sign-out-alt"></fa-icon>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

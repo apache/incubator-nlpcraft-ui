@@ -1,0 +1,131 @@
+<div *ngIf="query" class="d-flex flex-column h-100">
+    <div class="mt-3">
+        <h4>{{query.txt}}</h4>
+
+        <hr/>
+
+        <dl class="row small">
+            <dt class="col-sm-3">Request ID:</dt>
+            <dd class="col-sm-9">{{query.srvReqId}}</dd>
+
+            <dt class="col-sm-3">Status:</dt>
+            <dd class="col-sm-9">{{query.status}}</dd>
+
+            <dt class="col-sm-3">Model ID:</dt>
+            <dd class="col-sm-9">{{query.mdlId}}</dd>
+
+            <ng-container *ngIf="query.status === 'QRY_READY'">
+                <ng-container *ngIf="!query.error">
+                    <dt class="col-sm-3">Response Type:</dt>
+                    <dd class="col-sm-9">{{query.resType}}</dd>
+
+                    <dt class="col-sm-3">Response Body:</dt>
+                    <dd class="col-sm-9">{{query.resBody}}</dd>
+                </ng-container>
+
+                <ng-container *ngIf="query.error">
+                    <dt class="col-sm-3">Error Message:</dt>
+                    <dd class="col-sm-9">{{query.error}}</dd>
+
+                    <dt class="col-sm-3">Error Code:</dt>
+                    <dd class="col-sm-9">{{query.errorCode}}</dd>
+                </ng-container>
+            </ng-container>
+        </dl>
+    </div>
+
+    <ng-container *ngIf="query.logHolder">
+        <ng-container *ngIf="query.logHolder.intents && query.logHolder.intents.length > 0">
+            <h4>Matching intents (sorted from best to worst match)</h4>
+
+            <div class="flex-grow-1 mb-2 border rounded" style="overflow: auto; height: 0">
+                <ng-container *ngFor="let i of query.logHolder.intents">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Terms</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{i.id}}</td>
+                            <td class="p-0">
+                                <table class="table table-bordered table-sm m-0">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Text</th>
+                                        <th>Groups</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <ng-container *ngFor="let t of i.tokensGroups | keyvalue">
+                                        <ng-container *ngFor="let g of t.value">
+                                            <tr>
+                                                <td>{{g.token.id}}</td>
+                                                <td>{{g.token.metadata['nlpcraft:nlp:normtext']}}</td>
+                                                <td>{{g.token.groups}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="query.logHolder.queryContext && query.logHolder.queryContext.variants">
+            <h4>Variants</h4>
+
+            <div class="flex-grow-1 border rounded" style="overflow: auto; height: 0">
+                <ng-container *ngFor="let vs of query.logHolder.queryContext.variants; let i = index">
+                    <h6>Variant #{{i + 1}}</h6>
+
+                    <table class="table table-bordered table-sm">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th>text</th>
+                            <th>lemma</th>
+                            <th>pos</th>
+                            <th>quoted</th>
+                            <th>stop</th>
+                            <th>dict</th>
+                            <th>indexes</th>
+                            <th>direct</th>
+                            <th>sparsity</th>
+                            <th>groups</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let v of vs">
+                            <td>{{v.metadata['nlpcraft:nlp:index']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:origtext']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:lemma']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:pos']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:quoted']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:stopword']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:dict']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:wordindexes']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:direct']}}</td>
+                            <td>{{v.metadata['nlpcraft:nlp:english']}}</td>
+                            <td>{{v.groups}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+            </div>
+        </ng-container>
+    </ng-container>
+
+
+    <!--    TODO -->
+    <!--    <div class="card w-100" style="max-height: 300px; overflow: auto">-->
+    <!--        <pre>{{query | json}}</pre>-->
+    <!--    </div>-->
+</div>

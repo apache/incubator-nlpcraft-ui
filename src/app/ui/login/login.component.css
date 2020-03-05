@@ -1,0 +1,22 @@
+
+
+.login-section {
+    width: 350px;
+    text-align: center;
+    position: relative;
+    min-height: 350px;
+}
+
+.login-section .login-section-bg {
+    border-radius: 10px;
+    background-color: #eee;
+    position: absolute;
+    padding: 20px;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.login-section .login-section-bg .form-control {
+    border: 1px solid #ddd;
+    padding: 0.5rem .75rem;
+}

@@ -1,0 +1,65 @@
+<div class="main-content d-flex justify-content-center align-items-center">
+    <div class="login-section">
+        <div class="login-section-bg">
+            <form #loginForm="ngForm" (ngSubmit)="login()">
+                <app-error
+                    [error]="error"
+                    authError="Invalid username/password">
+                </app-error>
+
+                <div class="form-group">
+                    <input #apiEndpointInp="ngModel" [(ngModel)]="apiEndpoint"
+                           [disabled]="loading"
+                           autofocus
+                           class="form-control"
+                           id="apiEndpoint"
+                           name="apiEndpoint"
+                           placeholder="Server Address"
+                           required>
+                    <div *ngIf="!loading && !(apiEndpointInp.valid || apiEndpointInp.pristine)" class="alert alert-danger">
+                        Value required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input #emailInp="ngModel" [(ngModel)]="email"
+                           [disabled]="loading"
+                           autofocus
+                           class="form-control"
+                           id="email"
+                           name="email"
+                           placeholder="Email"
+                           required
+                           type="email">
+                    <div *ngIf="!loading && !(emailInp.valid || emailInp.pristine)" class="alert alert-danger">
+                        Value required.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input #passwordInp="ngModel" [(ngModel)]="password"
+                           [disabled]="loading"
+                           class="form-control"
+                           id="password"
+                           name="password"
+                           placeholder="Password"
+                           required
+                           type="password">
+                    <div *ngIf="!loading && !(passwordInp.valid || passwordInp.pristine)" class="alert alert-danger">
+                        Value required.
+                    </div>
+                </div>
+
+                <button [disabled]="loginForm.invalid || loading" class="btn btn-lg btn-primary btn-block" type="submit">
+                    <ng-container *ngIf="!loading">
+                        Sign in
+                    </ng-container>
+                    <ng-container *ngIf="loading">
+                        <fa-icon icon="spinner" pulse="true"></fa-icon>
+                        Signing in...
+                    </ng-container>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
