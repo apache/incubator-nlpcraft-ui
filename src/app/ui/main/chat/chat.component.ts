@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import {Component, Input, OnDestroy, OnInit} from '@angular/core'
 import {NlpModel, NlpProbe, NlpQueryState} from '../../../services/nlp/nlp.model'
 import {NlpService} from '../../../services/nlp/nlp.service'
@@ -8,20 +25,20 @@ import {NlpService} from '../../../services/nlp/nlp.service'
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-    queryText: string
+    queryText: string;
 
-    selectedModelId: string
+    selectedModelId: string;
 
-    selectedQuery: NlpQueryState
+    selectedQuery: NlpQueryState;
 
     @Input()
-    allProbes: NlpProbe[]
+    allProbes: NlpProbe[];
 
-    private _states: NlpQueryState[]
+    private _states: NlpQueryState[];
 
-    private _error: any
+    private _error: any;
 
-    private _timer: number
+    private _timer: number;
 
     constructor(
         private _nlp: NlpService
@@ -42,9 +59,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        this.trySelectDefaultModel()
+        this.trySelectDefaultModel();
 
-        await this.checkStatus()
+        await this.checkStatus();
 
         this._timer = setInterval(async () => {
             if (this._states && this._states.find(s => s.status === 'QRY_ENLISTED')) {
@@ -58,20 +75,20 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     allModels(): NlpModel[] {
-        const allModels: NlpModel[] = []
+        const allModels: NlpModel[] = [];
 
         this.allProbes.forEach(p => {
             p.models.forEach(m => {
                 allModels.push(m)
             })
-        })
+        });
 
         return allModels
     }
 
     async checkStatus() {
         try {
-            this._states = (await this._nlp.check().toPromise()).states
+            this._states = (await this._nlp.check().toPromise()).states;
 
             if (this.selectedQuery) {
                 this.selectQuery(this.selectedQuery.srvReqId)
@@ -82,18 +99,18 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     async ask() {
-        const query = this.queryText.trim()
+        const query = this.queryText.trim();
 
         if (this.selectedModelId && query.length > 0) {
-            this.queryText = ''
+            this.queryText = '';
 
             try {
-                this._error = null
-                this.selectedQuery = null
+                this._error = null;
+                this.selectedQuery = null;
 
-                const reqId = (await this._nlp.ask(query, this.selectedModelId).toPromise()).srvReqId
+                const reqId = (await this._nlp.ask(query, this.selectedModelId).toPromise()).srvReqId;
 
-                await this.checkStatus()
+                await this.checkStatus();
 
                 this.selectQuery(reqId)
             } catch (e) {
@@ -105,7 +122,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     async clear() {
         if (this._states) {
             try {
-                this._error = null
+                this._error = null;
 
                 await this._nlp.cancel(this._states.map(it => it.srvReqId)).toPromise()
             } catch (e) {
@@ -119,7 +136,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     async clearConversation() {
         if (this.selectedModelId) {
             try {
-                this._error = null
+                this._error = null;
 
                 await this._nlp.clearConversation(this.selectedModelId).toPromise()
             } catch (e) {

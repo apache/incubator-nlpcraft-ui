@@ -1,3 +1,20 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import {HttpClient} from '@angular/common/http'
 import {Injectable} from '@angular/core'
 import {BehaviorSubject, Observable} from 'rxjs'
@@ -6,7 +23,7 @@ import {LoginResponseDto, Session} from './session.model'
 
 @Injectable()
 export class SessionService {
-    private static readonly STORE_TOKEN_KEY = 'tok'
+    private static readonly STORE_TOKEN_KEY = 'tok';
 
     constructor(
         private _http: HttpClient
@@ -14,7 +31,7 @@ export class SessionService {
         // No-op.
     }
 
-    private _sessionChanges: BehaviorSubject<Session> = new BehaviorSubject(null)
+    private _sessionChanges: BehaviorSubject<Session> = new BehaviorSubject(null);
 
     get sessionChanges(): Observable<Session> {
         return this._sessionChanges.asObservable()
@@ -41,7 +58,7 @@ export class SessionService {
     }
 
     ping(): Promise<Session> {
-        const tok = sessionStorage.getItem(SessionService.STORE_TOKEN_KEY)
+        const tok = sessionStorage.getItem(SessionService.STORE_TOKEN_KEY);
 
         if (tok) {
             return this._http
@@ -79,13 +96,13 @@ export class SessionService {
     }
 
     clear() {
-        sessionStorage.removeItem(SessionService.STORE_TOKEN_KEY)
+        sessionStorage.removeItem(SessionService.STORE_TOKEN_KEY);
 
         this._sessionChanges.next(null)
     }
 
     private initSession(session: Session) {
-        sessionStorage.setItem(SessionService.STORE_TOKEN_KEY, session.token)
+        sessionStorage.setItem(SessionService.STORE_TOKEN_KEY, session.token);
 
         this._sessionChanges.next(session)
     }
