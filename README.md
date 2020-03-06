@@ -39,7 +39,7 @@ lock-in.
  
 #### Other Projects
 - [Apache NLPCraft](https://github.com/apache/incubator-nlpcraft) - main NLPCraft project.
-- [Apache NLPCraft UI](https://github.com/apache/incubator-nlpcraft-java-client) - Native Java client for NLPCraft REST APIs.
+- [Apache NLPCraft Java Client](https://github.com/apache/incubator-nlpcraft-java-client) - Native Java client for NLPCraft REST APIs.
 
 ## Browsers support
 Modern browsers and Internet Explorer 10+.
