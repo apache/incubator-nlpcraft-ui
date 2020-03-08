@@ -26,7 +26,7 @@ import {SessionService} from './services/session/session.service'
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-    private _sessionSub: Subscription;
+    private _sessionSub: Subscription
 
     constructor(
         private _router: RouterService,

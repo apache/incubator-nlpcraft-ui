@@ -82,9 +82,9 @@ import {LoadSpinnerComponent} from './ui/utils/load-spinner.component'
 })
 export class AppModule {
     constructor() {
-        library.add(faSpinner);
-        library.add(faSignOutAlt);
-        library.add(faTrashAlt);
-        library.add(faCommentSlash);
+        library.add(faSpinner)
+        library.add(faSignOutAlt)
+        library.add(faTrashAlt)
+        library.add(faCommentSlash)
     }
 }

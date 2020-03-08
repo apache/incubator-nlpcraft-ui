@@ -25,20 +25,20 @@ import {NlpService} from '../../../services/nlp/nlp.service'
     styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
-    queryText: string;
+    queryText: string
 
-    selectedModelId: string;
+    selectedModelId: string
 
-    selectedQuery: NlpQueryState;
+    selectedQuery: NlpQueryState
 
     @Input()
-    allProbes: NlpProbe[];
+    allProbes: NlpProbe[]
 
-    private _states: NlpQueryState[];
+    private _states: NlpQueryState[]
 
-    private _error: any;
+    private _error: any
 
-    private _timer: number;
+    private _timer: number
 
     constructor(
         private _nlp: NlpService
@@ -59,9 +59,9 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        this.trySelectDefaultModel();
+        this.trySelectDefaultModel()
 
-        await this.checkStatus();
+        await this.checkStatus()
 
         this._timer = setInterval(async () => {
             if (this._states && this._states.find(s => s.status === 'QRY_ENLISTED')) {
@@ -75,20 +75,20 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     allModels(): NlpModel[] {
-        const allModels: NlpModel[] = [];
+        const allModels: NlpModel[] = []
 
         this.allProbes.forEach(p => {
             p.models.forEach(m => {
                 allModels.push(m)
             })
-        });
+        })
 
         return allModels
     }
 
     async checkStatus() {
         try {
-            this._states = (await this._nlp.check().toPromise()).states;
+            this._states = (await this._nlp.check().toPromise()).states
 
             if (this.selectedQuery) {
                 this.selectQuery(this.selectedQuery.srvReqId)
@@ -99,18 +99,18 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     async ask() {
-        const query = this.queryText.trim();
+        const query = this.queryText.trim()
 
         if (this.selectedModelId && query.length > 0) {
-            this.queryText = '';
+            this.queryText = ''
 
             try {
-                this._error = null;
-                this.selectedQuery = null;
+                this._error = null
+                this.selectedQuery = null
 
-                const reqId = (await this._nlp.ask(query, this.selectedModelId).toPromise()).srvReqId;
+                const reqId = (await this._nlp.ask(query, this.selectedModelId).toPromise()).srvReqId
 
-                await this.checkStatus();
+                await this.checkStatus()
 
                 this.selectQuery(reqId)
             } catch (e) {
@@ -122,7 +122,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     async clear() {
         if (this._states) {
             try {
-                this._error = null;
+                this._error = null
 
                 await this._nlp.cancel(this._states.map(it => it.srvReqId)).toPromise()
             } catch (e) {
@@ -136,7 +136,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     async clearConversation() {
         if (this.selectedModelId) {
             try {
-                this._error = null;
+                this._error = null
 
                 await this._nlp.clearConversation(this.selectedModelId).toPromise()
             } catch (e) {

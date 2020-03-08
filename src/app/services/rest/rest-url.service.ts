@@ -19,9 +19,9 @@ import {Injectable} from '@angular/core'
 
 @Injectable()
 export class RestUrlService {
-    private static readonly API_ENDPOINT_KEY = 'api_endpoint';
+    private static readonly API_ENDPOINT_KEY = 'api_endpoint'
 
-    private _apiEndpoint: string;
+    private _apiEndpoint: string
 
     constructor() {
         this._apiEndpoint = localStorage.getItem(RestUrlService.API_ENDPOINT_KEY)
@@ -36,7 +36,7 @@ export class RestUrlService {
             value = value.substring(0, value.length - 1)
         }
 
-        this._apiEndpoint = value;
+        this._apiEndpoint = value
 
         if (value) {
             localStorage.setItem(RestUrlService.API_ENDPOINT_KEY, value)

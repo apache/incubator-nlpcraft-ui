@@ -29,10 +29,10 @@ import {Component, Input} from '@angular/core'
 })
 export class ErrorComponent {
     @Input()
-    error: any;
+    error: any
 
     @Input()
-    authError: string;
+    authError: string
 
     get hasError(): boolean {
         return !!this.error

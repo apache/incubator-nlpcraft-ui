@@ -34,7 +34,7 @@ export class RestUrlInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const nextReq = req.clone({
             url: this._rest.url(req.url)
-        });
+        })
 
         return next.handle(nextReq)
     }

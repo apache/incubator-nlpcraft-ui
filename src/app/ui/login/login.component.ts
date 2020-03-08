@@ -28,18 +28,18 @@ import {SessionService} from '../../services/session/session.service'
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    apiEndpoint: string;
+    apiEndpoint: string
 
-    email: string;
+    email: string
 
-    password: string;
+    password: string
 
     @ViewChild('loginForm')
-    private _loginForm: NgForm;
+    private _loginForm: NgForm
 
-    private _error: any;
+    private _error: any
 
-    private _loading = false;
+    private _loading = false
 
     constructor(
         private _restUrl: RestUrlService,
@@ -64,12 +64,12 @@ export class LoginComponent implements OnInit {
     public async login() {
         if (this._loginForm.valid) {
             try {
-                this._loading = true;
-                this._error = null;
+                this._loading = true
+                this._error = null
 
-                this._restUrl.apiEndpoint = this.apiEndpoint;
+                this._restUrl.apiEndpoint = this.apiEndpoint
 
-                await this._sessions.login(this.email, this.password).toPromise();
+                await this._sessions.login(this.email, this.password).toPromise()
 
                 this._routing.goToMain()
             } catch (e) {

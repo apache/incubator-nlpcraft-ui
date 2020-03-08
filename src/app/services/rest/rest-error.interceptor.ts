@@ -33,7 +33,7 @@ export class RestErrorInterceptor implements HttpInterceptor {
         return next.handle(req)
             .pipe(
                 catchError(err => {
-                    this.check(err);
+                    this.check(err)
 
                     return throwError(err)
                 })

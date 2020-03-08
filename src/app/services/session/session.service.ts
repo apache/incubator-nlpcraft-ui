@@ -23,15 +23,15 @@ import {LoginResponseDto, Session} from './session.model'
 
 @Injectable()
 export class SessionService {
-    private static readonly STORE_TOKEN_KEY = 'tok';
+    private static readonly STORE_TOKEN_KEY = 'tok'
+
+    private _sessionChanges: BehaviorSubject<Session> = new BehaviorSubject(null)
 
     constructor(
         private _http: HttpClient
     ) {
         // No-op.
     }
-
-    private _sessionChanges: BehaviorSubject<Session> = new BehaviorSubject(null);
 
     get sessionChanges(): Observable<Session> {
         return this._sessionChanges.asObservable()
@@ -58,7 +58,7 @@ export class SessionService {
     }
 
     ping(): Promise<Session> {
-        const tok = sessionStorage.getItem(SessionService.STORE_TOKEN_KEY);
+        const tok = sessionStorage.getItem(SessionService.STORE_TOKEN_KEY)
 
         if (tok) {
             return this._http
@@ -96,13 +96,13 @@ export class SessionService {
     }
 
     clear() {
-        sessionStorage.removeItem(SessionService.STORE_TOKEN_KEY);
+        sessionStorage.removeItem(SessionService.STORE_TOKEN_KEY)
 
         this._sessionChanges.next(null)
     }
 
     private initSession(session: Session) {
-        sessionStorage.setItem(SessionService.STORE_TOKEN_KEY, session.token);
+        sessionStorage.setItem(SessionService.STORE_TOKEN_KEY, session.token)
 
         this._sessionChanges.next(session)
     }

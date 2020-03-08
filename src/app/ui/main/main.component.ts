@@ -25,13 +25,13 @@ import {NlpService} from '../../services/nlp/nlp.service'
     styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit, OnDestroy {
-    private _error: any;
+    private _error: any
 
-    private _loading = false;
+    private _loading = false
 
-    private _allProbes: NlpProbe[];
+    private _allProbes: NlpProbe[]
 
-    private _timer: number;
+    private _timer: number
 
     constructor(
         private _nlp: NlpService
@@ -58,10 +58,10 @@ export class MainComponent implements OnInit, OnDestroy {
     async ngOnInit() {
         this._timer = setInterval(async () => {
             await this.loadProbes()
-        }, 1000);
+        }, 1000)
 
         try {
-            this._loading = true;
+            this._loading = true
 
             await this.loadProbes()
         } finally {
@@ -75,7 +75,7 @@ export class MainComponent implements OnInit, OnDestroy {
 
     private async loadProbes() {
         try {
-            this._allProbes = (await this._nlp.allProbes().toPromise()).probes;
+            this._allProbes = (await this._nlp.allProbes().toPromise()).probes
 
             if (!this.hasProbes) {
                 this._error = 'No NLPCraft Probe to talk to :('
@@ -83,7 +83,7 @@ export class MainComponent implements OnInit, OnDestroy {
                 this._error = null
             }
         } catch (e) {
-            this._allProbes = null;
+            this._allProbes = null
 
             this._error = e
         }

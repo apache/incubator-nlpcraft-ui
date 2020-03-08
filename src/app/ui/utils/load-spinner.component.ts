@@ -31,7 +31,7 @@ import {Component, Input} from '@angular/core'
 })
 export class LoadSpinnerComponent {
     @Input()
-    message: string;
+    message: string
 
     resolveMessage(): string {
         return this.message ? this.message : 'Loading...'
