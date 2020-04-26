@@ -53,7 +53,7 @@
 
                 <ng-container *ngIf="s.status === 'QRY_READY'">
                     <div *ngIf="s.resBody" class="alert alert-success">
-                        {{s.resBody}}
+                        <pre>{{s.resBody | json}}</pre>
                     </div>
                     <div *ngIf="s.error" class="alert alert-danger">
                         {{s.error}}

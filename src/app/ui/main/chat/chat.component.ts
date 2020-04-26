@@ -31,8 +31,9 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     selectedQuery: NlpQueryState
 
-    @Input()
-    allProbes: NlpProbe[]
+    private _allProbes: NlpProbe[]
+
+    private _allModels: NlpModel[]
 
     private _states: NlpQueryState[]
 
@@ -44,6 +45,26 @@ export class ChatComponent implements OnInit, OnDestroy {
         private _nlp: NlpService
     ) {
         // No-op.
+    }
+
+    get allProbes(): NlpProbe[] {
+        return this._allProbes
+    }
+
+    @Input()
+    set allProbes(value: NlpProbe[]) {
+        if (!this.isSameProbeList(value)) {
+            this._allProbes = value
+
+            // Update models cache.
+            this._allModels = []
+
+            value.forEach(p => {
+                p.models.forEach(m => {
+                    this._allModels.push(m)
+                })
+            })
+        }
     }
 
     get states(): NlpQueryState[] {
@@ -75,15 +96,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
 
     allModels(): NlpModel[] {
-        const allModels: NlpModel[] = []
-
-        this.allProbes.forEach(p => {
-            p.models.forEach(m => {
-                allModels.push(m)
-            })
-        })
-
-        return allModels
+        return this._allModels
     }
 
     async checkStatus() {
@@ -155,5 +168,11 @@ export class ChatComponent implements OnInit, OnDestroy {
         if (!this.hasModel && this.allModels() && this.allModels().length > 0) {
             this.selectedModelId = this.allModels()[0].id
         }
+    }
+
+    private isSameProbeList(value: NlpProbe[]) {
+        // Using JSON comparison for simplicity.
+        // Should replace with comparison by probe ID for better performance.
+        return JSON.stringify(value) === JSON.stringify(this._allProbes)
     }
 }
